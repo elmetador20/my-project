@@ -48,7 +48,7 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/resume-upload">
               <Button variant="outline" size="sm" className="mr-2">
-                Try Now
+                Upload Resume
               </Button>
             </Link>
             <Button variant="outline" size="sm">
@@ -90,7 +90,7 @@ export default function Header() {
               <div className="pt-4 flex flex-col space-y-2">
                 <Link href="/resume-upload" className="w-full" onClick={() => setIsMenuOpen(false)}>
                   <Button variant="outline" size="sm" className="w-full">
-                    Try Now
+                    Upload Resume
                   </Button>
                 </Link>
                 <Button variant="outline" size="sm">

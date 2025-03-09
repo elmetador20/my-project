@@ -21,11 +21,14 @@ export default function Home() {
             </div>
             <div className="space-x-4">
               <Button size="lg" asChild>
-                <Link href="/features">Get Started</Link>
+                <Link href="/resume-upload">Upload Resume</Link>
               </Button>
-              <Button variant="outline" size="lg">
-                Learn More
+              <Button variant="outline" size="lg" asChild>
+                <Link href="/features">Learn More</Link>
               </Button>
+            </div>
+            <div className="mt-4 p-4 bg-blue-50 text-blue-800 rounded-md mx-auto max-w-md">
+              Click the <strong>Upload Resume</strong> button or use the <strong>Upload Resume</strong> button in the header to upload your resume and get AI-powered career analysis!
             </div>
           </div>
         </div>
@@ -166,8 +169,8 @@ export default function Home() {
             <p className="max-w-[700px] md:text-lg">
               Join thousands of students who have transformed their careers with LeapSkill.
             </p>
-            <Button className="bg-white text-primary hover:bg-gray-100" size="lg">
-              <Link href="/contact">Get Started Now</Link>
+            <Button className="bg-white text-primary hover:bg-gray-100" size="lg" asChild>
+              <Link href="/resume-upload">Upload Resume Now</Link>
             </Button>
           </div>
         </div>
