@@ -94,32 +94,47 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4">
-            <nav className="flex flex-col space-y-4">
-              {navigationLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    location === link.href ? "text-primary" : "text-gray-600"
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="pt-4 flex flex-col space-y-2">
-                <Link href="/resume-upload" className="w-full" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" size="sm" className="w-full">
-                    Upload Resume
+          <div className="md:hidden py-4 bg-background/95 backdrop-blur-md rounded-lg border border-gray-800 mt-2 shadow-xl">
+            <div className="p-4">
+              <nav className="flex flex-col space-y-4">
+                {navigationLinks.map((link, i) => (
+                  <div 
+                    key={link.name}
+                    className="transition-all duration-300 ease-in-out"
+                    style={{ opacity: 1, transform: `translateY(${i * 5}px)` }}
+                  >
+                    <Link
+                      href={link.href}
+                      className={`text-sm font-medium transition-colors hover:text-primary p-2 rounded-md flex items-center ${
+                        location === link.href 
+                          ? "text-primary bg-primary/10 font-semibold" 
+                          : "text-foreground/80 hover:bg-gray-800/50"
+                      }`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  </div>
+                ))}
+                <div className="pt-4 flex flex-col space-y-3 border-t border-gray-800 mt-2">
+                  <div className="flex items-center justify-between pb-2">
+                    <span className="text-sm text-gray-400">Theme</span>
+                    <ThemeSwitcher />
+                  </div>
+                  <Link href="/resume-upload" className="w-full" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="default" size="sm" className="w-full bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-700 text-white shadow-md">
+                      Upload Resume
+                    </Button>
+                  </Link>
+                  <Button variant="outline" size="sm" className="border-gray-700 hover:bg-gray-800">
+                    Log In
                   </Button>
-                </Link>
-                <Button variant="outline" size="sm">
-                  Log In
-                </Button>
-                <Button size="sm">Sign Up</Button>
-              </div>
-            </nav>
+                  <Button size="sm" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-md">
+                    Sign Up
+                  </Button>
+                </div>
+              </nav>
+            </div>
           </div>
         )}
       </div>
