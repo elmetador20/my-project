@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Zap } from "lucide-react";
+import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { motion } from "framer-motion";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,40 +23,59 @@ export default function Header() {
   // Added a separate Try Now button that links to the resume upload page
 
   return (
-    <header className="bg-white border-b border-gray-200">
+    <header className="bg-background backdrop-blur-lg bg-opacity-80 border-b border-gray-800 sticky top-0 z-50">
       <div className="container mx-auto px-4 md:px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="text-2xl font-bold text-primary">LeapSkill</span>
+            <motion.div 
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+              className="flex items-center"
+            >
+              <Zap className="h-6 w-6 text-primary mr-2" />
+              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500">
+                LeapSkill
+              </span>
+            </motion.div>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            {navigationLinks.map((link) => (
-              <Link
+            {navigationLinks.map((link, i) => (
+              <motion.div 
                 key={link.name}
-                href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  location === link.href ? "text-primary" : "text-gray-600"
-                }`}
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.1 * i, duration: 0.3 }}
               >
-                {link.name}
-              </Link>
+                <Link
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                    location === link.href ? "text-primary font-semibold" : "text-foreground/80"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              </motion.div>
             ))}
           </nav>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
+            <ThemeSwitcher />
             <Link href="/resume-upload">
-              <Button variant="outline" size="sm" className="mr-2">
+              <Button variant="default" size="sm" className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-700 text-white shadow-md">
                 Upload Resume
               </Button>
             </Link>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="border-gray-700 hover:bg-gray-800">
               Log In
             </Button>
-            <Button size="sm">Sign Up</Button>
+            <Button size="sm" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-md">
+              Sign Up
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
