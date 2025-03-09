@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation } from "wouter";
 import MainLayout from "@/components/layout/main-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowRight, ArrowLeft, CheckCircle2, XCircle } from "lucide-react";
+import { ArrowRight, ArrowLeft, CheckCircle2, XCircle, FileText } from "lucide-react";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { PDFGenerator } from "@/components/pdf-generator";
 
 // Mock data for skills
 const skillsData = [
@@ -63,6 +64,7 @@ export default function AnalysisResults() {
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [, navigate] = useLocation();
+  const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Simulation of data loading
@@ -85,37 +87,49 @@ export default function AnalysisResults() {
 
   return (
     <MainLayout>
-      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-900 to-black text-white">
         <div className="container px-4 md:px-6">
           {isLoading ? (
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-2xl font-bold mb-6">Analyzing Your Resume & Career Goals</h2>
               <div className="space-y-4">
-                <p className="text-gray-500">Our AI is processing your information...</p>
+                <p className="text-gray-300">Our AI is processing your information...</p>
                 <Progress value={60} className="w-full max-w-md mx-auto" />
                 <p className="text-sm text-gray-400">This usually takes about 30 seconds</p>
               </div>
             </div>
           ) : (
             <div className="max-w-5xl mx-auto">
-              <div className="mb-8">
-                <Button variant="outline" size="sm" className="mb-4" onClick={() => navigate("/resume-upload")}>
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Back to Resume Upload
-                </Button>
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-                  Skills Analysis for {userInfo?.fullName || "User"}
-                </h1>
-                <p className="mt-2 text-gray-500">
-                  Career Goal: {userInfo?.careerGoal || "Software Engineer"}
-                </p>
+              <div className="mb-8 flex justify-between items-center">
+                <div>
+                  <Button variant="outline" size="sm" className="mb-4" onClick={() => navigate("/resume-upload")}>
+                    <ArrowLeft className="mr-2 h-4 w-4" /> Back to Resume Upload
+                  </Button>
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+                    Skills Analysis for {userInfo?.fullName || "User"}
+                  </h1>
+                  <p className="mt-2 text-gray-300">
+                    Career Goal: {userInfo?.careerGoal || "Software Engineer"}
+                  </p>
+                </div>
+                <PDFGenerator 
+                  targetRef={reportRef} 
+                  fileName={`leapskill-report-${userInfo?.fullName || 'user'}.pdf`}
+                  userData={{
+                    name: userInfo?.fullName || "User",
+                    email: userInfo?.email,
+                    careerGoal: userInfo?.careerGoal || "Software Engineer"
+                  }}
+                />
               </div>
 
-              <Tabs defaultValue="skillsGap" className="mb-12">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="skillsGap">Skills Gap</TabsTrigger>
-                  <TabsTrigger value="skillsBreakdown">Skills Breakdown</TabsTrigger>
-                  <TabsTrigger value="strengthsWeaknesses">Strengths & Weaknesses</TabsTrigger>
-                </TabsList>
+              <div ref={reportRef}>
+                <Tabs defaultValue="skillsGap" className="mb-12">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="skillsGap">Skills Gap</TabsTrigger>
+                    <TabsTrigger value="skillsBreakdown">Skills Breakdown</TabsTrigger>
+                    <TabsTrigger value="strengthsWeaknesses">Strengths & Weaknesses</TabsTrigger>
+                  </TabsList>
 
                 {/* Skills Gap Tab */}
                 <TabsContent value="skillsGap" className="pt-6">
@@ -274,6 +288,7 @@ export default function AnalysisResults() {
                 <Button onClick={handleNextPage}>
                   View Career Roadmap <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
+              </div>
               </div>
             </div>
           )}
