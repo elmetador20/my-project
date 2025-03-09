@@ -17,6 +17,8 @@ export default function Header() {
     { name: "Pricing", href: "/pricing" },
     { name: "Partnerships", href: "/partnerships" },
   ];
+  
+  // Added a separate Try Now button that links to the resume upload page
 
   return (
     <header className="bg-white border-b border-gray-200">
@@ -44,6 +46,11 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
+            <Link href="/resume-upload">
+              <Button variant="outline" size="sm" className="mr-2">
+                Try Now
+              </Button>
+            </Link>
             <Button variant="outline" size="sm">
               Log In
             </Button>
@@ -81,6 +88,11 @@ export default function Header() {
                 </Link>
               ))}
               <div className="pt-4 flex flex-col space-y-2">
+                <Link href="/resume-upload" className="w-full" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="outline" size="sm" className="w-full">
+                    Try Now
+                  </Button>
+                </Link>
                 <Button variant="outline" size="sm">
                   Log In
                 </Button>
