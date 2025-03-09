@@ -72,7 +72,7 @@ export default function ResumeUpload() {
 
   return (
     <MainLayout>
-      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-900 to-black text-white">
         <div className="container px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">

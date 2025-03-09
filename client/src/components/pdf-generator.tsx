@@ -107,10 +107,10 @@ export function PDFGenerator({ targetRef, fileName = 'leapskill-report.pdf', rep
     <Button 
       onClick={generatePDF}
       disabled={isGenerating}
-      variant="outline"
-      className="mt-4 flex items-center gap-2"
+      variant="default"
+      className="mt-4 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md shadow-md"
     >
-      <Download className="h-4 w-4" />
+      <Download className="h-5 w-5" />
       {isGenerating ? 'Generating PDF...' : 'Download Report'}
     </Button>
   );

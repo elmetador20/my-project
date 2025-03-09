@@ -100,7 +100,7 @@ export default function AnalysisResults() {
             </div>
           ) : (
             <div className="max-w-5xl mx-auto">
-              <div className="mb-8 flex justify-between items-center">
+              <div className="mb-8 flex flex-col md:flex-row md:justify-between md:items-center">
                 <div>
                   <Button variant="outline" size="sm" className="mb-4" onClick={() => navigate("/resume-upload")}>
                     <ArrowLeft className="mr-2 h-4 w-4" /> Back to Resume Upload
@@ -112,15 +112,21 @@ export default function AnalysisResults() {
                     Career Goal: {userInfo?.careerGoal || "Software Engineer"}
                   </p>
                 </div>
-                <PDFGenerator 
-                  targetRef={reportRef} 
-                  fileName={`leapskill-report-${userInfo?.fullName || 'user'}.pdf`}
-                  userData={{
-                    name: userInfo?.fullName || "User",
-                    email: userInfo?.email,
-                    careerGoal: userInfo?.careerGoal || "Software Engineer"
-                  }}
-                />
+                <div className="mt-4 md:mt-0">
+                  <div className="flex items-center bg-blue-900/30 p-3 rounded-lg mb-3">
+                    <FileText className="h-6 w-6 text-blue-400 mr-2" />
+                    <span className="text-blue-300 font-medium">Save your analysis as PDF</span>
+                  </div>
+                  <PDFGenerator 
+                    targetRef={reportRef} 
+                    fileName={`leapskill-report-${userInfo?.fullName || 'user'}.pdf`}
+                    userData={{
+                      name: userInfo?.fullName || "User",
+                      email: userInfo?.email,
+                      careerGoal: userInfo?.careerGoal || "Software Engineer"
+                    }}
+                  />
+                </div>
               </div>
 
               <div ref={reportRef}>
@@ -281,13 +287,24 @@ export default function AnalysisResults() {
                 </TabsContent>
               </Tabs>
 
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8">
                 <Button variant="outline" onClick={() => navigate("/resume-upload")}>
                   <ArrowLeft className="mr-2 h-4 w-4" /> Back
                 </Button>
-                <Button onClick={handleNextPage}>
-                  View Career Roadmap <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <div className="flex items-center">
+                  <PDFGenerator 
+                    targetRef={reportRef} 
+                    fileName={`leapskill-report-${userInfo?.fullName || 'user'}.pdf`}
+                    userData={{
+                      name: userInfo?.fullName || "User",
+                      email: userInfo?.email,
+                      careerGoal: userInfo?.careerGoal || "Software Engineer"
+                    }}
+                  />
+                  <Button onClick={handleNextPage} className="ml-4">
+                    View Career Roadmap <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
               </div>
               </div>
             </div>
